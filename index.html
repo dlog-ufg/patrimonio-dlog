@@ -58,8 +58,9 @@
   @keyframes sp{to{transform:rotate(360deg)}}
   .erro{background:#FFF4F0;border:1px solid #FFD0C0;border-radius:8px;padding:1rem 1.25rem;font-size:.82rem;color:var(--alerta)}
   .ig{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;margin-bottom:1.25rem}
-  .ig.ig-3{grid-template-columns:repeat(3,1fr)}
   .ic{background:var(--branco);border:1px solid var(--borda);border-radius:10px;padding:1.2rem;position:relative;overflow:hidden}
+  a.ic-link{text-decoration:none;color:inherit;display:block;transition:all .2s}
+  a.ic-link:hover{transform:translateY(-2px);box-shadow:0 6px 18px rgba(0,63,127,.1);border-color:var(--verde)}
   .ic::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--azul)}
   .ic.r::before{background:var(--alerta)}.ic.g::before{background:var(--verde)}.ic.y::before{background:var(--ouro)}
   .il{font-family:'DM Mono',monospace;font-size:.62rem;color:var(--cinza-l);letter-spacing:.07em;text-transform:uppercase;margin-bottom:.4rem}
@@ -167,6 +168,7 @@
       <a href="#linhadotempo">Linha do Tempo</a>
       <a href="#fases">Fases</a>
       <a href="#equipe">Equipe</a>
+      <a href="https://drive.google.com/drive/u/0/folders/1iW6uXSrj8cStnlOY6WVo9P60_LpIny7P" target="_blank" rel="noopener">Arquivos ↗</a>
     </nav>
   </div>
 </header>
@@ -209,7 +211,7 @@
       <span class="sn">01</span>
       <h2>Painel de Indicadores</h2>
     </div>
-    <div class="ig ig-3">
+    <div class="ig">
       <div class="ic r">
         <div class="il">O que vamos resolver</div>
         <div class="iv r">R$ 82,7M</div>
@@ -228,6 +230,12 @@
         <div class="is">Cards ativos no board</div>
         <div class="itag y" id="it-cards">Carregando</div>
       </div>
+      <a class="ic g ic-link" href="https://drive.google.com/drive/u/0/folders/1iW6uXSrj8cStnlOY6WVo9P60_LpIny7P" target="_blank" rel="noopener">
+        <div class="il">Arquivos do projeto</div>
+        <div class="iv g">Drive ↗</div>
+        <div class="is">Documentos, planilhas e fotos de campo</div>
+        <div class="itag g">Acessar</div>
+      </a>
     </div>
     <div class="pb">
       <div class="pt">Progresso por fase</div>
