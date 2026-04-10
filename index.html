@@ -115,28 +115,27 @@
   footer{background:var(--azul);border-top:3px solid var(--ouro);padding:1.75rem 2rem;text-align:center}
   .fo{font-family:'DM Mono',monospace;font-size:.68rem;color:var(--ouro-l);letter-spacing:.12em;text-transform:uppercase;margin-bottom:.35rem}
   .fc2{font-size:.75rem;color:rgba(255,255,255,.35)}
-  .tl-box{background:var(--branco);border:1px solid var(--borda);border-radius:10px;padding:1.75rem 1.5rem 1.25rem;margin-bottom:1.5rem;overflow:hidden}
+  .tl-box{background:var(--branco);border:1px solid var(--borda);border-radius:10px;padding:1.75rem 1.5rem 1.5rem;margin-bottom:1.5rem}
   .tl-sum{display:flex;align-items:baseline;justify-content:space-between;margin-bottom:1.5rem;gap:1rem;flex-wrap:wrap}
   .tl-sum-t{font-size:.82rem;font-weight:600;color:var(--cinza-m)}
   .tl-sum-v{font-family:'DM Mono',monospace;font-size:.7rem;color:var(--cinza-l)}
   .tl-sum-v b{color:var(--verde);font-weight:600}
-  .tl-pbar{height:6px;background:var(--fundo);border-radius:100px;overflow:hidden;margin-bottom:1.75rem}
+  .tl-pbar{height:6px;background:var(--fundo);border-radius:100px;overflow:hidden;margin-bottom:2rem}
   .tl-pbf{height:100%;background:linear-gradient(90deg,var(--verde),var(--ouro));border-radius:100px;transition:width 1s ease}
-  .tl-track{position:relative;padding:0 .5rem}
-  .tl-line{position:absolute;top:14px;left:.5rem;right:.5rem;height:2px;background:var(--borda)}
-  .tl-line-fill{position:absolute;top:14px;left:.5rem;height:2px;background:var(--verde);transition:width 1s ease}
-  .tl-items{position:relative;display:flex;justify-content:space-between;align-items:flex-start}
-  .tl-item{position:relative;flex:1;display:flex;flex-direction:column;align-items:center;min-width:0;padding:0 .3rem}
-  .tl-dot{width:14px;height:14px;border-radius:50%;background:var(--fundo);border:2px solid var(--borda);margin-bottom:.55rem;position:relative;z-index:2;transition:all .3s}
+  .tl-track{position:relative;padding-top:.25rem}
+  .tl-line{position:absolute;top:calc(.25rem + 7px);left:8%;right:8%;height:2px;background:var(--borda);z-index:1}
+  .tl-line-fill{position:absolute;top:calc(.25rem + 7px);left:8%;height:2px;background:var(--verde);transition:width 1s ease;z-index:1;max-width:84%}
+  .tl-items{position:relative;display:grid;grid-template-columns:repeat(var(--tl-cols,5),1fr);gap:.5rem;z-index:2}
+  .tl-item{position:relative;display:flex;flex-direction:column;align-items:center;min-width:0;padding:0 .25rem}
+  .tl-dot{width:16px;height:16px;border-radius:50%;background:var(--branco);border:2px solid var(--borda);margin-bottom:.85rem;transition:all .3s;flex-shrink:0}
   .tl-dot.done{background:var(--verde);border-color:var(--verde);box-shadow:0 0 0 3px rgba(42,122,90,.15)}
   .tl-dot.now{background:var(--ouro);border-color:var(--ouro);box-shadow:0 0 0 3px rgba(200,168,64,.2);animation:pulse 2s infinite}
-  .tl-dot.miss{background:var(--alerta);border-color:var(--alerta)}
-  .tl-date{font-family:'DM Mono',monospace;font-size:.6rem;color:var(--cinza-l);letter-spacing:.03em;margin-bottom:.25rem;text-align:center;white-space:nowrap}
-  .tl-name{font-size:.72rem;color:var(--cinza-e);font-weight:500;text-align:center;line-height:1.35;max-width:110px;word-wrap:break-word;hyphens:auto}
+  .tl-name{font-size:.75rem;color:var(--cinza-e);font-weight:600;text-align:center;line-height:1.3;word-wrap:break-word;hyphens:auto;margin-bottom:.3rem}
   .tl-item.done .tl-name{color:var(--cinza-m)}
-  .tl-item.pend .tl-name{color:var(--cinza-l)}
-  .tl-desc{display:none;position:absolute;top:100%;left:50%;transform:translateX(-50%);background:var(--cinza-e);color:var(--branco);font-size:.68rem;padding:.45rem .7rem;border-radius:4px;white-space:nowrap;max-width:200px;white-space:normal;z-index:10;margin-top:.35rem;box-shadow:0 4px 12px rgba(0,0,0,.15)}
-  .tl-item:hover .tl-desc{display:block}
+  .tl-item.pend .tl-name{color:var(--cinza-l);font-weight:500}
+  .tl-date{font-family:'DM Mono',monospace;font-size:.6rem;color:var(--cinza-l);letter-spacing:.02em;text-align:center;line-height:1.3;word-wrap:break-word}
+  .tl-item.done .tl-date{color:var(--verde)}
+  .tl-item.now .tl-date{color:var(--amarelo);font-weight:600}
   .cbanner{background:#FFF8E8;border:1px solid #E8D060;border-radius:8px;padding:1rem 1.25rem;font-size:.82rem;color:var(--amarelo);margin-bottom:2rem;display:none}
   .cbanner.show{display:block}
   .cbanner strong{display:block;margin-bottom:.35rem}
@@ -145,10 +144,11 @@
     .hero-in{grid-template-columns:1fr}.hstats{display:none}
     .ig{grid-template-columns:repeat(2,1fr)}.eq{grid-template-columns:repeat(2,1fr)}
     .fase{grid-template-columns:80px 24px 1fr}
-    .tl-track{overflow-x:auto;padding-bottom:.5rem}
-    .tl-items{min-width:640px}
-    .tl-line,.tl-line-fill{left:.5rem;right:.5rem}
-    .tl-name{max-width:90px;font-size:.68rem}
+    .tl-box{padding:1.25rem 1rem}
+    .tl-track{overflow-x:auto;padding-bottom:.75rem}
+    .tl-items{min-width:600px}
+    .tl-name{font-size:.7rem}
+    .tl-date{font-size:.58rem}
   }
 </style>
 </head>
@@ -315,46 +315,68 @@ function isEquipeList(nome) {
   return nome.toUpperCase().includes('[EQUIPE]');
 }
 
-function isTimelineList(nome) {
-  return nome.toUpperCase().includes('[TIMELINE]');
-}
-
 function fmtData(iso) {
-  if (!iso) return '—';
+  if (!iso) return '';
   const d = new Date(iso);
-  return d.toLocaleDateString('pt-BR', {day:'2-digit', month:'short', year:'numeric'}).replace('.', '');
+  return d.toLocaleDateString('pt-BR', {day:'2-digit', month:'short', year:'numeric'}).replace(/\./g,'');
 }
 
-function renderTimeline(cards) {
+function nomeFaseLimpo(nome) {
+  return nome.replace(/\[(CONCLUIDO|CONCLUÍDO|ATIVO)\]/gi, '').trim();
+}
+
+function renderTimeline(lists, actions) {
   const c = document.getElementById('tl-cont');
-  if (!cards || !cards.length) {
-    c.innerHTML = '<div class="loading">Nenhum marco cadastrado. Adicione cards à lista <b>[TIMELINE]</b> no Trello.</div>';
+  if (!lists || !lists.length) {
+    c.innerHTML = '<div class="loading">Nenhuma fase cadastrada no board do Trello.</div>';
     return;
   }
-  const ordenados = [...cards].sort((a,b) => {
-    const da = a.due ? new Date(a.due).getTime() : Infinity;
-    const db = b.due ? new Date(b.due).getTime() : Infinity;
-    return da - db;
-  });
-  const agora = Date.now();
-  const concluidos = ordenados.filter(x => x.dueComplete).length;
-  const total = ordenados.length;
+
+  // Para cada fase, descobre a data da transição de status via histórico de ações
+  const acts = (actions||[]).slice().sort((a,b)=>new Date(a.date) - new Date(b.date));
+  const statusDate = {}; // listId -> {concluido: iso, ativo: iso}
+  for (const a of acts) {
+    if (a.type !== 'updateList') continue;
+    const l = a.data && a.data.list;
+    const oldName = a.data && a.data.old && a.data.old.name;
+    if (!l || !oldName) continue;
+    const nowName = l.name.toUpperCase();
+    const prevName = oldName.toUpperCase();
+    statusDate[l.id] = statusDate[l.id] || {};
+    if (nowName.includes('[CONCLUIDO]') && !prevName.includes('[CONCLUIDO]')) {
+      statusDate[l.id].concluido = a.date;
+    }
+    if (nowName.includes('[ATIVO]') && !prevName.includes('[ATIVO]')) {
+      statusDate[l.id].ativo = a.date;
+    }
+  }
+
+  const total = lists.length;
+  const concluidos = lists.filter(l => l.s === 'c').length;
   const pct = Math.round((concluidos/total)*100);
+  const idxAtiva = lists.findIndex(l => l.s === 'a');
+  const proximoIdx = idxAtiva >= 0 ? idxAtiva : (concluidos < total ? concluidos : total);
 
-  let proximoIdx = ordenados.findIndex(x => !x.dueComplete);
-  if (proximoIdx === -1) proximoIdx = total;
-
-  const items = ordenados.map((card, i) => {
-    let cls = 'pend', dotCls = '';
-    if (card.dueComplete) { cls='done'; dotCls='done'; }
-    else if (i === proximoIdx) { cls='now'; dotCls='now'; }
-    else if (card.due && new Date(card.due).getTime() < agora) { cls='miss'; dotCls='miss'; }
-    const desc = (card.desc||'').replace(/</g,'&lt;').slice(0,160);
+  const items = lists.map((l, i) => {
+    const sd = statusDate[l.id] || {};
+    let cls, dotCls, dataISO, dataLbl;
+    if (l.s === 'c') {
+      cls = 'done'; dotCls = 'done';
+      dataISO = sd.concluido;
+      dataLbl = dataISO ? 'Concluído em ' + fmtData(dataISO) : 'Concluído';
+    } else if (l.s === 'a') {
+      cls = 'now'; dotCls = 'now';
+      dataISO = sd.ativo;
+      dataLbl = dataISO ? 'Iniciado em ' + fmtData(dataISO) : 'Em andamento';
+    } else {
+      cls = 'pend'; dotCls = '';
+      dataLbl = 'Pendente';
+    }
+    const nome = nomeFaseLimpo(l.name);
     return `<div class="tl-item ${cls}">
       <div class="tl-dot ${dotCls}"></div>
-      <div class="tl-date">${fmtData(card.due)}</div>
-      <div class="tl-name">${card.name}</div>
-      ${desc?`<div class="tl-desc">${desc}</div>`:''}
+      <div class="tl-date">${dataLbl}</div>
+      <div class="tl-name">${nome}</div>
     </div>`;
   }).join('');
 
@@ -363,12 +385,12 @@ function renderTimeline(cards) {
   c.innerHTML = `<div class="tl-box">
     <div class="tl-sum">
       <div class="tl-sum-t">Progresso geral do projeto</div>
-      <div class="tl-sum-v"><b>${concluidos}</b> de ${total} marcos concluídos · ${pct}%</div>
+      <div class="tl-sum-v"><b>${concluidos}</b> de ${total} fases concluídas · ${pct}%</div>
     </div>
     <div class="tl-pbar"><div class="tl-pbf" style="width:${pct}%"></div></div>
-    <div class="tl-track">
+    <div class="tl-track" style="--tl-cols:${total}">
       <div class="tl-line"></div>
-      <div class="tl-line-fill" style="width:calc(${fillPct}% - ${fillPct===0?0:1}rem)"></div>
+      <div class="tl-line-fill" style="width:calc(${fillPct}% * 0.84)"></div>
       <div class="tl-items">${items}</div>
     </div>
   </div>`;
@@ -484,10 +506,9 @@ async function loadTrello() {
   const r1 = await fetch(`https://api.trello.com/1/boards/${BOARD_ID}/lists?${a}&_=${Date.now()}`);
   if (!r1.ok) throw new Error('Erro ' + r1.status + ' ao buscar listas');
   const raw = await r1.json();
-  const allLists = raw.map(l => ({id:l.id, name:l.name, s:statusFase(l.name), equipe:isEquipeList(l.name), timeline:isTimelineList(l.name)}));
-  const lists = allLists.filter(l => !l.equipe && !l.timeline);
+  const allLists = raw.map(l => ({id:l.id, name:l.name, s:statusFase(l.name), equipe:isEquipeList(l.name)}));
+  const lists = allLists.filter(l => !l.equipe);
   const equipeLists = allLists.filter(l => l.equipe);
-  const timelineLists = allLists.filter(l => l.timeline);
   const map = {};
   let total = 0;
   for (const l of lists) {
@@ -502,13 +523,9 @@ async function loadTrello() {
     const cs = await r3.json();
     equipe = equipe.concat(cs);
   }
-  let timeline = [];
-  for (const l of timelineLists) {
-    const r4 = await fetch(`https://api.trello.com/1/lists/${l.id}/cards?${a}&_=${Date.now()}`);
-    const cs = await r4.json();
-    timeline = timeline.concat(cs);
-  }
-  return {lists, map, total, equipe, timeline};
+  const r4 = await fetch(`https://api.trello.com/1/boards/${BOARD_ID}/actions?filter=updateList&limit=1000&${a}&_=${Date.now()}`);
+  const actions = r4.ok ? await r4.json() : [];
+  return {lists, map, total, equipe, actions};
 }
 
 async function init() {
@@ -519,16 +536,16 @@ async function init() {
     renderFases(FB_LISTS, FB_CARDS);
     upd(FB_LISTS, total);
     renderEquipe([]);
-    renderTimeline([]);
+    renderTimeline(FB_LISTS, []);
     return;
   }
   try {
-    const {lists,map,total,equipe,timeline} = await loadTrello();
+    const {lists,map,total,equipe,actions} = await loadTrello();
     renderProg(lists, map);
     renderFases(lists, map);
     upd(lists, total);
     renderEquipe(equipe);
-    renderTimeline(timeline);
+    renderTimeline(lists, actions);
   } catch(e) {
     document.getElementById('fases-cont').innerHTML = `<div class="erro">Erro ao conectar ao Trello: ${e.message}</div>`;
     document.getElementById('prog-cont').innerHTML = `<div class="erro">Dados indisponíveis.</div>`;
