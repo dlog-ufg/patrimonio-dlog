@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Projeto Inventário Patrimonial — DLOG/UFG</title>
+<meta http-equiv="Cache-Control" content="no-store, no-cache, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --azul:#003F7F; --azul-m:#0A5FA8; --azul-l:#1A7FCC;
+    --ouro:#C8A840; --ouro-l:#E8C860;
+    --cinza-e:#1A1E2E; --cinza-m:#3A4055; --cinza-l:#8A90A8;
+    --fundo:#F4F6FB; --branco:#FFFFFF;
+    --alerta:#D45A2A; --verde:#2A7A5A; --amarelo:#B07820;
+    --borda:#D8DCE8;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{font-family:'DM Sans',sans-serif;background:var(--fundo);color:var(--cinza-e);line-height:1.6}
+  header{background:var(--azul);position:sticky;top:0;z-index:100;border-bottom:3px solid var(--ouro)}
+  .hi{max-width:1200px;margin:0 auto;padding:0 2rem;display:flex;align-items:center;justify-content:space-between;height:64px}
+  .la{display:flex;align-items:center;gap:1rem}
+  .ls{font-family:'DM Mono',monospace;font-size:.72rem;font-weight:500;color:var(--ouro-l);letter-spacing:.15em;text-transform:uppercase}
+  .lsp{width:1px;height:28px;background:rgba(255,255,255,.2)}
+  .lt{font-family:'DM Serif Display',serif;font-size:1rem;color:var(--branco)}
+  nav{display:flex;gap:.25rem}
+  nav a{font-size:.78rem;font-weight:500;color:rgba(255,255,255,.7);text-decoration:none;padding:.4rem .8rem;border-radius:4px;transition:all .2s}
+  nav a:hover{color:var(--branco);background:rgba(255,255,255,.1)}
+  .hero{background:var(--azul);padding:4.5rem 2rem 3.5rem;position:relative;overflow:hidden}
+  .hero::before{content:'';position:absolute;top:-60px;right:-80px;width:500px;height:500px;border-radius:50%;background:radial-gradient(circle,rgba(200,168,64,.08) 0%,transparent 70%)}
+  .hero::after{content:'';position:absolute;bottom:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,var(--ouro),transparent)}
+  .hero-in{max-width:1200px;margin:0 auto;display:grid;grid-template-columns:1fr 320px;gap:4rem;align-items:center}
+  .htag{display:inline-flex;align-items:center;gap:.5rem;background:rgba(200,168,64,.15);border:1px solid rgba(200,168,64,.3);border-radius:100px;padding:.35rem .85rem;font-family:'DM Mono',monospace;font-size:.68rem;color:var(--ouro-l);letter-spacing:.1em;text-transform:uppercase;margin-bottom:1.5rem}
+  .htag::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--ouro-l);animation:pulse 2s infinite}
+  @keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
+  .hero h1{font-family:'DM Serif Display',serif;font-size:2.8rem;color:var(--branco);line-height:1.15;margin-bottom:1rem}
+  .hero h1 em{color:var(--ouro-l);font-style:italic}
+  .hdesc{font-size:.9rem;color:rgba(255,255,255,.65);max-width:500px;line-height:1.75}
+  .hstats{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.12);border-radius:12px;padding:1.5rem}
+  .hstat{margin-bottom:1rem}
+  .hstat:last-child{margin-bottom:0}
+  .hsv{font-family:'DM Serif Display',serif;font-size:1.8rem;color:var(--branco);line-height:1}
+  .hsv.r{color:#FF8060}.hsv.g{color:#60D0A0}
+  .hsl{font-size:.72rem;color:rgba(255,255,255,.45);margin-top:.15rem}
+  .hdiv{height:1px;background:rgba(255,255,255,.1);margin:.85rem 0}
+  .hupd{display:inline-flex;align-items:center;gap:.4rem;background:rgba(200,168,64,.1);border:1px solid rgba(200,168,64,.22);border-radius:6px;padding:.35rem .75rem;font-family:'DM Mono',monospace;font-size:.65rem;color:var(--ouro);letter-spacing:.08em;margin-top:1.25rem}
+  main{max-width:1200px;margin:0 auto;padding:3rem 2rem 5rem}
+  section{margin-bottom:4rem}
+  .sh{display:flex;align-items:baseline;gap:.85rem;margin-bottom:1.75rem;padding-bottom:1rem;border-bottom:2px solid var(--borda)}
+  .sn{font-family:'DM Mono',monospace;font-size:.68rem;color:var(--ouro);letter-spacing:.1em}
+  .sh h2{font-family:'DM Serif Display',serif;font-size:1.5rem;color:var(--azul)}
+  .lb{margin-left:auto;display:flex;align-items:center;gap:.4rem;font-family:'DM Mono',monospace;font-size:.62rem;color:var(--cinza-l);letter-spacing:.06em}
+  .ld{width:6px;height:6px;border-radius:50%;background:#60D0A0;animation:pulse 2s infinite}
+  .loading{display:flex;align-items:center;gap:.75rem;color:var(--cinza-l);font-size:.85rem;padding:2rem 0}
+  .spin{width:18px;height:18px;border:2px solid var(--borda);border-top-color:var(--azul-m);border-radius:50%;animation:sp .7s linear infinite}
+  @keyframes sp{to{transform:rotate(360deg)}}
+  .erro{background:#FFF4F0;border:1px solid #FFD0C0;border-radius:8px;padding:1rem 1.25rem;font-size:.82rem;color:var(--alerta)}
+  .ig{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;margin-bottom:1.25rem}
+  .ic{background:var(--branco);border:1px solid var(--borda);border-radius:10px;padding:1.2rem;position:relative;overflow:hidden}
+  .ic::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--azul)}
+  .ic.r::before{background:var(--alerta)}.ic.g::before{background:var(--verde)}.ic.y::before{background:var(--ouro)}
+  .il{font-family:'DM Mono',monospace;font-size:.62rem;color:var(--cinza-l);letter-spacing:.07em;text-transform:uppercase;margin-bottom:.4rem}
+  .iv{font-family:'DM Serif Display',serif;font-size:1.65rem;color:var(--cinza-e);line-height:1}
+  .iv.r{color:var(--alerta)}.iv.g{color:var(--verde)}
+  .is{font-size:.7rem;color:var(--cinza-l);margin-top:.25rem}
+  .itag{display:inline-flex;align-items:center;font-size:.65rem;font-weight:600;padding:.15rem .5rem;border-radius:4px;margin-top:.45rem}
+  .itag.r{background:#FFF0EC;color:var(--alerta)}.itag.g{background:#E8F7F0;color:var(--verde)}.itag.y{background:#FFF8E8;color:var(--amarelo)}
+  .pb{background:var(--branco);border:1px solid var(--borda);border-radius:10px;padding:1.5rem}
+  .pt{font-size:.82rem;font-weight:600;color:var(--cinza-m);margin-bottom:1.1rem}
+  .pi{margin-bottom:1rem}.pi:last-child{margin-bottom:0}
+  .pr{display:flex;justify-content:space-between;font-size:.78rem;margin-bottom:.35rem}
+  .pr span:first-child{color:var(--cinza-m)}.pr span:last-child{font-family:'DM Mono',monospace;font-size:.68rem;color:var(--cinza-l)}
+  .bar{height:5px;background:var(--fundo);border-radius:100px;overflow:hidden}
+  .bf{height:100%;border-radius:100px;background:var(--azul-m);transition:width 1s ease}
+  .bf.g{background:var(--verde)}.bf.y{background:var(--ouro)}
+  .fw{display:flex;flex-direction:column;gap:0}
+  .fase{display:grid;grid-template-columns:150px 28px 1fr;gap:0 1.25rem;align-items:start}
+  .fl{font-family:'DM Mono',monospace;font-size:.67rem;color:var(--cinza-l);letter-spacing:.04em;padding-top:.3rem;text-align:right;line-height:1.4}
+  .fli{display:flex;flex-direction:column;align-items:center}
+  .fd{width:12px;height:12px;border-radius:50%;background:var(--azul);border:2.5px solid var(--branco);box-shadow:0 0 0 2px var(--azul);flex-shrink:0;margin-top:.3rem}
+  .fd.c{background:var(--verde);box-shadow:0 0 0 2px var(--verde)}
+  .fd.a{background:var(--ouro);box-shadow:0 0 0 2px var(--ouro);animation:pulse 2s infinite}
+  .fd.p{background:var(--fundo);box-shadow:0 0 0 2px var(--borda)}
+  .fc{width:2px;flex:1;min-height:16px;background:var(--borda)}
+  .fc.c{background:var(--verde)}.fc.a{background:linear-gradient(var(--ouro),var(--borda))}
+  .fb{margin-bottom:1rem}
+  .fcard{background:var(--branco);border:1px solid var(--borda);border-radius:8px;overflow:hidden}
+  .fcard.c{border-left:3px solid var(--verde)}.fcard.a{border-left:3px solid var(--ouro)}
+  .fh{padding:.85rem 1.1rem;cursor:pointer;display:flex;align-items:center;justify-content:space-between;user-select:none}
+  .fh:hover{background:var(--fundo)}
+  .ft{font-size:.88rem;font-weight:600;color:var(--cinza-e)}
+  .fr{display:flex;align-items:center;gap:.75rem}
+  .fbadge{font-size:.62rem;font-weight:600;padding:.15rem .55rem;border-radius:4px;letter-spacing:.05em;text-transform:uppercase}
+  .fbadge.c{background:#E8F7F0;color:var(--verde)}.fbadge.a{background:#FFF8E8;color:var(--amarelo)}.fbadge.p{background:var(--fundo);color:var(--cinza-l)}
+  .fcount{font-family:'DM Mono',monospace;font-size:.65rem;color:var(--cinza-l)}
+  .fchev{font-size:.75rem;color:var(--cinza-l);transition:transform .2s}
+  .fchev.open{transform:rotate(180deg)}
+  .fcards{display:none;border-top:1px solid var(--borda)}
+  .fcards.open{display:block}
+  .ti{padding:.75rem 1.1rem;border-bottom:1px solid var(--borda)}
+  .ti:last-child{border-bottom:none}
+  .ti:hover{background:var(--fundo)}
+  .tn{font-size:.82rem;color:var(--cinza-m);margin-bottom:.2rem;font-weight:500}
+  .td{font-size:.74rem;color:var(--cinza-l);line-height:1.5;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+  .tl{font-family:'DM Mono',monospace;font-size:.65rem;color:var(--azul-l);text-decoration:none;display:inline-block;margin-top:.2rem}
+  .tl:hover{text-decoration:underline}
+  .eq{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem}
+  .ec{background:var(--branco);border:1px solid var(--borda);border-radius:10px;padding:1.2rem;display:flex;flex-direction:column;gap:.4rem}
+  .eav{width:38px;height:38px;border-radius:50%;background:var(--azul);display:flex;align-items:center;justify-content:center;font-family:'DM Serif Display',serif;font-size:.95rem;color:var(--ouro-l);margin-bottom:.15rem}
+  .en{font-size:.88rem;font-weight:600;color:var(--cinza-e)}
+  .eca{font-size:.73rem;color:var(--cinza-l)}
+  .ee{font-family:'DM Mono',monospace;font-size:.67rem;color:var(--azul-m);text-decoration:none}
+  footer{background:var(--azul);border-top:3px solid var(--ouro);padding:1.75rem 2rem;text-align:center}
+  .fo{font-family:'DM Mono',monospace;font-size:.68rem;color:var(--ouro-l);letter-spacing:.12em;text-transform:uppercase;margin-bottom:.35rem}
+  .fc2{font-size:.75rem;color:rgba(255,255,255,.35)}
+  .cbanner{background:#FFF8E8;border:1px solid #E8D060;border-radius:8px;padding:1rem 1.25rem;font-size:.82rem;color:var(--amarelo);margin-bottom:2rem;display:none}
+  .cbanner.show{display:block}
+  .cbanner strong{display:block;margin-bottom:.35rem}
+  .cbanner code{background:rgba(0,0,0,.06);padding:.1rem .3rem;border-radius:3px;font-family:'DM Mono',monospace;font-size:.78rem}
+  @media(max-width:900px){
+    .hero-in{grid-template-columns:1fr}.hstats{display:none}
+    .ig{grid-template-columns:repeat(2,1fr)}.eq{grid-template-columns:repeat(2,1fr)}
+    .fase{grid-template-columns:80px 24px 1fr}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="hi">
+    <div class="la">
+      <span class="ls">UFG · DLOG · CPAT</span>
+      <div class="lsp"></div>
+      <span class="lt">Inventário Patrimonial</span>
+    </div>
+    <nav>
+      <a href="#indicadores">Indicadores</a>
+      <a href="#fases">Fases</a>
+      <a href="#equipe">Equipe</a>
+    </nav>
+  </div>
+</header>
+
+<div class="hero">
+  <div class="hero-in">
+    <div>
+      <div class="htag">Projeto ativo — 2026</div>
+      <h1>Projeto Inventário<br><em>Patrimonial UFG</em></h1>
+      <p class="hdesc">Levantamento, conciliação contábil e regularização do acervo patrimonial da Universidade Federal de Goiás. Conduzido pela CPAT/DLOG com base no Decreto nº 12.785/2025.</p>
+      <div class="hupd" id="lastUpdate">⊙ Sincronizando com Trello...</div>
+    </div>
+    <div class="hstats">
+      <div class="hstat">
+        <div class="hsv r">R$ 82,7M</div>
+        <div class="hsl">Discrepância contábil identificada</div>
+      </div>
+      <div class="hdiv"></div>
+      <div class="hstat">
+        <div class="hsv" id="hero-fases">5 fases</div>
+        <div class="hsl">Estrutura no Trello</div>
+      </div>
+      <div class="hdiv"></div>
+      <div class="hstat">
+        <div class="hsv g">Ativo</div>
+        <div class="hsl">Status do projeto</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<main>
+  <div class="cbanner" id="cb">
+    <strong>Configuracao pendente</strong>
+    Preencha <code>TRELLO_KEY</code> e <code>TRELLO_TOKEN</code> no script deste arquivo para ativar a sincronizacao ao vivo. Por ora o site exibe dados estaticos de demonstracao.
+  </div>
+
+  <section id="indicadores">
+    <div class="sh">
+      <span class="sn">01</span>
+      <h2>Painel de Indicadores</h2>
+    </div>
+    <div class="ig">
+      <div class="ic r">
+        <div class="il">Discrepância contábil</div>
+        <div class="iv r">R$ 82,7M</div>
+        <div class="is">Entre registros e bens localizados</div>
+        <div class="itag r">Critico</div>
+      </div>
+      <div class="ic y">
+        <div class="il">Fases do projeto</div>
+        <div class="iv" id="iv-fases">—</div>
+        <div class="is">Listas no board Trello</div>
+        <div class="itag y" id="it-fases">Carregando</div>
+      </div>
+      <div class="ic y">
+        <div class="il">Tarefas mapeadas</div>
+        <div class="iv" id="iv-cards">—</div>
+        <div class="is">Cards ativos no board</div>
+        <div class="itag y" id="it-cards">Carregando</div>
+      </div>
+      <div class="ic g">
+        <div class="il">Marco regulatório</div>
+        <div class="iv g">Decreto</div>
+        <div class="is">Decreto nº 12.785/2025 vigente</div>
+        <div class="itag g">Atualizado</div>
+      </div>
+    </div>
+    <div class="pb">
+      <div class="pt">Progresso por fase</div>
+      <div id="prog-cont"><div class="loading"><div class="spin"></div>Carregando...</div></div>
+    </div>
+  </section>
+
+  <section id="fases">
+    <div class="sh">
+      <span class="sn">02</span>
+      <h2>Fases do Projeto</h2>
+      <div class="lb"><div class="ld"></div>Dados ao vivo do Trello</div>
+    </div>
+    <div id="fases-cont"><div class="loading"><div class="spin"></div>Carregando fases e tarefas...</div></div>
+  </section>
+
+  <section id="equipe">
+    <div class="sh">
+      <span class="sn">03</span>
+      <h2>Equipe Responsavel</h2>
+    </div>
+    <div class="eq">
+      <div class="ec"><div class="eav">G</div><div class="en">Guilherme</div><div class="eca">Diretor de Logistica — DLOG/UFG</div><a class="ee" href="mailto:dlog@ufg.br">dlog@ufg.br</a></div>
+      <div class="ec"><div class="eav">P</div><div class="en">Paula Ferreira da Silva</div><div class="eca">Coordenadora de Patrimônio — CPAT</div><a class="ee" href="mailto:cpat.dlog@ufg.br">cpat.dlog@ufg.br</a></div>
+      <div class="ec"><div class="eav">T</div><div class="en">Tarcises Miranda Rocha</div><div class="eca">Presidente da CPAA</div><a class="ee" href="mailto:cpaa.dlog@ufg.br">cpaa.dlog@ufg.br</a></div>
+      <div class="ec"><div class="eav">G</div><div class="en">Gabriel</div><div class="eca">Tecnico — CPAT</div><a class="ee" href="mailto:cpat.dlog@ufg.br">cpat.dlog@ufg.br</a></div>
+      <div class="ec"><div class="eav">V</div><div class="en">Vinicius</div><div class="eca">Tecnico — CPAT</div><a class="ee" href="mailto:cpat.dlog@ufg.br">cpat.dlog@ufg.br</a></div>
+      <div class="ec"><div class="eav">D</div><div class="en">Diego</div><div class="eca">Tecnico — CPAT</div><a class="ee" href="mailto:cpat.dlog@ufg.br">cpat.dlog@ufg.br</a></div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="fo">UFG · Diretoria de Logistica · DLOG · UG 153052</div>
+  <div class="fc2">Uso interno — Projeto Patrimônio 2026–2027</div>
+</footer>
+
+<script>
+// ═══════════════════════════════════════════════
+//  CONFIGURACAO — preencha antes de publicar
+// ═══════════════════════════════════════════════
+const TRELLO_KEY   = '38a0e367592811275041ec98d9e836ea';
+const TRELLO_TOKEN = 'ATTAdd8424cdda96bd1823c7b19016518fb8e6add2e8da43de813ff0b75da8f758746B6EFEBE';
+const BOARD_ID     = '69d875d797d5c8a08a12e368';
+// ═══════════════════════════════════════════════
+
+const OK = TRELLO_KEY !== 'SUA_CHAVE_AQUI' && TRELLO_TOKEN !== 'SEU_TOKEN_AQUI';
+
+// Dados de fallback baseados no board real
+const FB_LISTS = [
+  {id:'l1', name:'Fase 1 — Planejamento',             s:'a'},
+  {id:'l2', name:'Fase 2 — Contratação de Bolsistas', s:'p'},
+  {id:'l3', name:'Fase 3 — Levantamento em Campo',    s:'p'},
+  {id:'l4', name:'Fase 4 — Regularização',            s:'p'},
+  {id:'l5', name:'Fase 5 — Encerramento',             s:'p'},
+];
+const FB_CARDS = {
+  l1:[
+    {name:'Definir escopo e unidades prioritárias', desc:'Mapear quais unidades/campi concentram o maior volume de bens sem inventário. Priorizar por valor estimado e tempo sem verificação.', url:'https://trello.com/c/tZ4LMJAf'},
+    {name:'Análise de custo-benefício — RFID vs código de barras vs status quo', desc:'Calcular o custo real do inventário patrimonial anual no modelo atual (manual) e comparar com alternativas tecnológicas.', url:'https://trello.com/c/EucIk62P'},
+  ],
+  l2:[
+    {name:'Verificar modalidade e fonte de recursos para bolsas', desc:'Verificar junto à PROGRAD/PROAD qual modalidade de bolsa é adequada para atividade de levantamento patrimonial.', url:'https://trello.com/c/RMzXrtFs'},
+    {name:'Abrir processo SEI de contratação', desc:'Formalizar a contratação dos bolsistas via SEI. Incluir justificativa, número de bolsistas (10), carga horária e plano de trabalho.', url:'https://trello.com/c/Ug7yJ1Fx'},
+    {name:'Capacitar bolsistas para o trabalho de campo', desc:'Treinamento sobre uso do formulário digital, identificação dos bens, procedimento de foto e app SIADS mobile.', url:'https://trello.com/c/3DQY7824'},
+  ],
+  l3:[], l4:[], l5:[]
+};
+
+function statusFase(nome) {
+  const n = nome.toUpperCase();
+  if (n.includes('[CONCLUIDO]') || n.includes('[CONCLUÍDO]')) return 'c';
+  if (n.includes('[ATIVO]')) return 'a';
+  return 'p';
+}
+
+function renderProg(lists, map) {
+  const c = document.getElementById('prog-cont');
+  c.innerHTML = lists.map(l => {
+    const t = (map[l.id]||[]).length;
+    const pct = l.s==='c'?100:l.s==='a'?30:5;
+    const cls = l.s==='c'?'g':l.s==='a'?'y':'';
+    const lbl = l.s==='c'?'Concluido':l.s==='a'?'Em andamento':'Pendente';
+    return `<div class="pi">
+      <div class="pr"><span>${l.name}</span><span>${lbl} · ${t} tarefa${t!==1?'s':''}</span></div>
+      <div class="bar"><div class="bf ${cls}" style="width:${pct}%"></div></div>
+    </div>`;
+  }).join('');
+}
+
+function renderFases(lists, map) {
+  const c = document.getElementById('fases-cont');
+  let h = '<div class="fw">';
+  lists.forEach((l, i) => {
+    const cards = map[l.id]||[];
+    const s = l.s;
+    const lbl = s==='c'?'Concluido':s==='a'?'Em andamento':'Pendente';
+    const last = i === lists.length-1;
+    const open = i===0 ? 'open' : '';
+    const chevOpen = i===0 ? 'open' : '';
+    h += `<div class="fase">
+      <div class="fl">Fase ${String(i+1).padStart(2,'0')}</div>
+      <div class="fli">
+        <div class="fd ${s}"></div>
+        ${!last?`<div class="fc ${s}"></div>`:''}
+      </div>
+      <div class="fb">
+        <div class="fcard ${s}">
+          <div class="fh" onclick="tog(this)">
+            <span class="ft">${l.name}</span>
+            <div class="fr">
+              <span class="fcount">${cards.length} tarefa${cards.length!==1?'s':''}</span>
+              <span class="fbadge ${s}">${lbl}</span>
+              <span class="fchev ${chevOpen}">▼</span>
+            </div>
+          </div>
+          <div class="fcards ${open}">
+            ${cards.length ? cards.map(c2=>`
+              <div class="ti">
+                <div class="tn">${c2.name}</div>
+                ${c2.desc?`<div class="td">${c2.desc.replace(/[#*]/g,'').replace(/\n/g,' ')}</div>`:''}
+                ${c2.url?`<a href="${c2.url}" target="_blank" class="tl">Ver no Trello →</a>`:''}
+              </div>`).join('') :
+              `<div class="ti" style="color:var(--cinza-l);font-size:.78rem">Nenhuma tarefa nesta fase.</div>`
+            }
+          </div>
+        </div>
+      </div>
+    </div>`;
+  });
+  h += '</div>';
+  c.innerHTML = h;
+}
+
+function tog(el) {
+  el.nextElementSibling.classList.toggle('open');
+  el.querySelector('.fchev').classList.toggle('open');
+}
+
+function upd(lists, total) {
+  document.getElementById('iv-fases').textContent = lists.length;
+  document.getElementById('it-fases').textContent = 'Board ativo';
+  document.getElementById('iv-cards').textContent = total;
+  document.getElementById('it-cards').textContent = 'Sincronizado';
+  document.getElementById('hero-fases').textContent = lists.length + ' fases';
+  const n = new Date();
+  document.getElementById('lastUpdate').textContent =
+    '⊙ Atualizado ' + n.toLocaleDateString('pt-BR') + ' às ' + n.toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit'});
+}
+
+async function loadTrello() {
+  const a = `key=${TRELLO_KEY}&token=${TRELLO_TOKEN}`;
+  const r1 = await fetch(`https://api.trello.com/1/boards/${BOARD_ID}/lists?${a}&_=${Date.now()}`);
+  if (!r1.ok) throw new Error('Erro ' + r1.status + ' ao buscar listas');
+  const raw = await r1.json();
+  const lists = raw.map(l => ({id:l.id, name:l.name, s:statusFase(l.name)}));
+  const map = {};
+  let total = 0;
+  for (const l of lists) {
+    const r2 = await fetch(`https://api.trello.com/1/lists/${l.id}/cards?${a}&_=${Date.now()}`);
+    const cs = await r2.json();
+    map[l.id] = cs.map(c => ({name:c.name, desc:c.desc, url:c.shortUrl}));
+    total += cs.length;
+  }
+  return {lists, map, total};
+}
+
+async function init() {
+  if (!OK) {
+    document.getElementById('cb').classList.add('show');
+    const total = Object.values(FB_CARDS).reduce((a,b)=>a+b.length,0);
+    renderProg(FB_LISTS, FB_CARDS);
+    renderFases(FB_LISTS, FB_CARDS);
+    upd(FB_LISTS, total);
+    return;
+  }
+  try {
+    const {lists,map,total} = await loadTrello();
+    renderProg(lists, map);
+    renderFases(lists, map);
+    upd(lists, total);
+  } catch(e) {
+    document.getElementById('fases-cont').innerHTML = `<div class="erro">Erro ao conectar ao Trello: ${e.message}</div>`;
+    document.getElementById('prog-cont').innerHTML = `<div class="erro">Dados indisponíveis.</div>`;
+  }
+}
+
+init();
+</script>
+</body>
+</html>
