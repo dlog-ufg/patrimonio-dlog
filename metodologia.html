@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Metodologia — As 4 Etapas do Inventário | DLOG/UFG</title>
+<meta http-equiv="Cache-Control" content="no-store, no-cache, must-revalidate">
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --azul:#003F7F; --azul-m:#0A5FA8; --azul-l:#1A7FCC;
+    --ouro:#C8A840; --ouro-l:#E8C860;
+    --cinza-e:#1A1E2E; --cinza-m:#3A4055; --cinza-l:#8A90A8;
+    --fundo:#F4F6FB; --branco:#FFFFFF;
+    --alerta:#D45A2A; --verde:#2A7A5A; --amarelo:#B07820;
+    --borda:#D8DCE8;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{font-family:'DM Sans',sans-serif;background:var(--fundo);color:var(--cinza-e);line-height:1.7}
+  header{background:var(--azul);position:sticky;top:0;z-index:100;border-bottom:3px solid var(--ouro)}
+  .hi{max-width:1000px;margin:0 auto;padding:0 2rem;display:flex;align-items:center;justify-content:space-between;height:64px}
+  .la{display:flex;align-items:center;gap:1rem}
+  .ls{font-family:'DM Mono',monospace;font-size:.72rem;font-weight:500;color:var(--ouro-l);letter-spacing:.15em;text-transform:uppercase}
+  .lsp{width:1px;height:28px;background:rgba(255,255,255,.2)}
+  .lt{font-family:'DM Serif Display',serif;font-size:1rem;color:var(--branco)}
+  nav{display:flex;gap:.25rem}
+  nav a{font-size:.78rem;font-weight:500;color:rgba(255,255,255,.7);text-decoration:none;padding:.4rem .8rem;border-radius:4px;transition:all .2s}
+  nav a:hover{color:var(--branco);background:rgba(255,255,255,.1)}
+
+  .hero{background:var(--azul);padding:4rem 2rem 3rem;position:relative;overflow:hidden}
+  .hero::after{content:'';position:absolute;bottom:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,var(--ouro),transparent)}
+  .hero-in{max-width:1000px;margin:0 auto}
+  .htag{display:inline-flex;align-items:center;gap:.5rem;background:rgba(200,168,64,.15);border:1px solid rgba(200,168,64,.3);border-radius:100px;padding:.35rem .85rem;font-family:'DM Mono',monospace;font-size:.68rem;color:var(--ouro-l);letter-spacing:.1em;text-transform:uppercase;margin-bottom:1.25rem}
+  .hero h1{font-family:'DM Serif Display',serif;font-size:2.4rem;color:var(--branco);line-height:1.15;margin-bottom:.75rem}
+  .hero h1 em{color:var(--ouro-l);font-style:italic}
+  .hsub{font-size:.9rem;color:rgba(255,255,255,.7);max-width:680px}
+
+  main{max-width:820px;margin:0 auto;padding:3rem 2rem 5rem}
+  section{margin-bottom:3.5rem}
+
+  h2{font-family:'DM Serif Display',serif;font-size:1.75rem;color:var(--azul);margin-bottom:1rem;padding-bottom:.6rem;border-bottom:2px solid var(--borda);display:flex;align-items:baseline;gap:.75rem}
+  h2 .sn{font-family:'DM Mono',monospace;font-size:.65rem;color:var(--ouro);letter-spacing:.1em}
+  h3{font-size:1rem;font-weight:600;color:var(--cinza-e);margin:1.5rem 0 .5rem;text-transform:uppercase;letter-spacing:.04em;font-family:'DM Mono',monospace}
+  p{margin-bottom:.9rem;color:var(--cinza-m);font-size:.95rem}
+  p strong{color:var(--cinza-e)}
+  ul{margin:.5rem 0 1rem 1.25rem}
+  li{margin-bottom:.45rem;color:var(--cinza-m);font-size:.93rem}
+  li strong{color:var(--cinza-e)}
+
+  .quote{background:var(--branco);border-left:3px solid var(--ouro);padding:1.1rem 1.35rem;margin:1.25rem 0;border-radius:0 6px 6px 0;font-size:.9rem;color:var(--cinza-m);font-style:italic;box-shadow:0 1px 3px rgba(0,0,0,.04)}
+  .quote::before{content:'"';font-family:'DM Serif Display',serif;font-size:2rem;color:var(--ouro);line-height:0;vertical-align:-.5rem;margin-right:.2rem}
+  .quote cite{display:block;font-size:.72rem;color:var(--cinza-l);margin-top:.5rem;font-style:normal;font-family:'DM Mono',monospace;letter-spacing:.04em}
+
+  .etapa{background:var(--branco);border:1px solid var(--borda);border-radius:10px;padding:1.75rem 2rem;margin-bottom:1.5rem;position:relative;overflow:hidden}
+  .etapa::before{content:'';position:absolute;top:0;left:0;right:0;height:4px;background:var(--azul)}
+  .etapa.e1::before{background:#60D0A0}
+  .etapa.e2::before{background:var(--azul-l)}
+  .etapa.e3::before{background:var(--ouro)}
+  .etapa.e4::before{background:var(--alerta)}
+  .etapa-num{display:inline-block;font-family:'DM Mono',monospace;font-size:.68rem;color:var(--ouro);letter-spacing:.12em;text-transform:uppercase;margin-bottom:.3rem}
+  .etapa h2{font-size:1.4rem;border:none;padding:0;margin-bottom:1.1rem}
+  .etapa-bloco{margin-top:1.25rem}
+  .etapa-bloco h4{font-family:'DM Mono',monospace;font-size:.68rem;color:var(--cinza-l);letter-spacing:.1em;text-transform:uppercase;margin-bottom:.5rem;font-weight:500}
+
+  .fluxo{background:var(--branco);border:1px solid var(--borda);border-radius:10px;padding:2rem 1.5rem;margin:1.5rem 0;display:grid;grid-template-columns:repeat(4,1fr);gap:.5rem;position:relative}
+  .fluxo-item{text-align:center;padding:.75rem .5rem;background:var(--fundo);border-radius:6px;position:relative;font-size:.78rem}
+  .fluxo-item strong{display:block;font-family:'DM Mono',monospace;font-size:.6rem;color:var(--ouro);letter-spacing:.1em;margin-bottom:.3rem;text-transform:uppercase}
+  .fluxo-item span{color:var(--cinza-e);font-weight:600}
+  .fluxo-item:not(:last-child)::after{content:'→';position:absolute;right:-0.6rem;top:50%;transform:translateY(-50%);color:var(--ouro);font-size:1.1rem;font-weight:bold;z-index:2}
+
+  .tabela{background:var(--branco);border:1px solid var(--borda);border-radius:10px;overflow:hidden;margin:1.25rem 0}
+  .tabela table{width:100%;border-collapse:collapse}
+  .tabela th{background:var(--fundo);font-size:.72rem;text-transform:uppercase;letter-spacing:.05em;color:var(--cinza-m);font-weight:600;padding:.85rem 1rem;text-align:left;font-family:'DM Mono',monospace}
+  .tabela td{padding:.85rem 1rem;border-top:1px solid var(--borda);font-size:.85rem;color:var(--cinza-m)}
+  .tabela td:first-child{font-weight:600;color:var(--cinza-e);white-space:nowrap}
+
+  .callout{background:#FFF8E8;border:1px solid #E8D060;border-radius:8px;padding:1.1rem 1.35rem;margin:1.25rem 0;font-size:.88rem;color:var(--amarelo)}
+  .callout strong{display:block;margin-bottom:.35rem;color:#8A5810;font-size:.72rem;text-transform:uppercase;letter-spacing:.08em;font-family:'DM Mono',monospace}
+
+  footer{background:var(--azul);border-top:3px solid var(--ouro);padding:1.75rem 2rem;text-align:center}
+  .fo{font-family:'DM Mono',monospace;font-size:.68rem;color:var(--ouro-l);letter-spacing:.12em;text-transform:uppercase;margin-bottom:.35rem}
+  .fc2{font-size:.75rem;color:rgba(255,255,255,.35)}
+
+  @media(max-width:700px){
+    .hi{padding:0 1rem;height:auto;flex-direction:column;gap:.5rem;padding:.75rem 1rem}
+    nav{flex-wrap:wrap;justify-content:center}
+    .hero{padding:2.5rem 1.25rem}
+    .hero h1{font-size:1.75rem}
+    main{padding:2rem 1.25rem 3rem}
+    .etapa{padding:1.25rem 1.25rem}
+    .fluxo{grid-template-columns:1fr 1fr;gap:.4rem}
+    .fluxo-item:not(:last-child)::after{display:none}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="hi">
+    <div class="la">
+      <span class="ls">UFG · DLOG · CPAT</span>
+      <div class="lsp"></div>
+      <span class="lt">Metodologia</span>
+    </div>
+    <nav>
+      <a href="index.html">← Voltar ao painel</a>
+      <a href="https://trello.com/b/iGVO6GYV" target="_blank" rel="noopener">Board Trello ↗</a>
+      <a href="https://drive.google.com/drive/u/0/folders/1iW6uXSrj8cStnlOY6WVo9P60_LpIny7P" target="_blank" rel="noopener">Arquivos ↗</a>
+    </nav>
+  </div>
+</header>
+
+<div class="hero">
+  <div class="hero-in">
+    <div class="htag">Documento metodológico · Abril 2026</div>
+    <h1>As 4 etapas do <em>ciclo de regularização</em></h1>
+    <p class="hsub">Metodologia operacional do projeto de inventário patrimonial da UFG, baseada nas decisões da reunião entre Guilherme Oliveira (DLOG) e Paula Ferreira (CPAT) em 10/04/2026.</p>
+  </div>
+</div>
+
+<main>
+
+  <section>
+    <h2><span class="sn">§</span>Contexto</h2>
+    <p>A Universidade Federal de Goiás apresenta uma <strong>discrepância contábil de R$ 82,7 milhões</strong> entre os bens registrados no sistema patrimonial (SIADS/CIPAC) e os bens fisicamente localizados nas unidades.</p>
+    <p>A origem dessa discrepância é multifatorial:</p>
+    <ul>
+      <li>Plaquetas que nunca foram coladas em bens já registrados (<em>"o tanto de plaqueta que algumas unidades têm guardado na gaveta"</em>)</li>
+      <li>Bens de projetos FUNAP/CNPq/CAPES que nunca foram incorporados ao sistema, com termos de doação chegando com 3 a 5 anos de atraso</li>
+      <li>Validações feitas no aplicativo SIADS sem conferência física presencial</li>
+      <li>Bens perdidos durante movimentações entre unidades, sem rastro documental</li>
+    </ul>
+    <p>Este documento descreve a metodologia operacional proposta para o projeto de inventário patrimonial conduzido pela CPAT/DLOG em 2026–2027, organizada em um ciclo de 4 etapas que cada bem percorre até ser regularizado.</p>
+  </section>
+
+  <section>
+    <h2><span class="sn">§</span>Princípios norteadores</h2>
+    <ul>
+      <li><strong>Unidade por unidade.</strong> O projeto avança serialmente por unidade acadêmica/administrativa. Não se trabalha em paralelo massivo porque não é possível lidar com muitos problemas ao mesmo tempo — cada unidade tem suas particularidades, seus agentes patrimoniais e seu histórico.</li>
+      <li><strong>Priorização por volume.</strong> As unidades são atacadas em ordem de criticidade, definida pela quantidade de itens não inventariados. Escola de Agronomia e ICB foram identificadas como as duas mais críticas.</li>
+      <li><strong>Conferência física obrigatória.</strong> Nenhum item pode ser validado no aplicativo SIADS sem conferência presencial. Validação cega (marcar tudo como localizado sem ir ao local) é explicitamente proibida.</li>
+      <li><strong>Conciliação antes de incorporação.</strong> Antes de criar um registro novo no CIPAC, tenta-se conciliar o item encontrado em campo com algum bem já registrado como não inventariado. Só se não houver match é que o bem é incorporado como novo.</li>
+      <li><strong>Re-coleta obrigatória após tombamento.</strong> Depois que um item recebe plaqueta nova, ele precisa ser re-coletado no app SIADS. Sem esse passo, o ciclo não fecha e o item voltará a aparecer como não localizado no próximo inventário.</li>
+    </ul>
+    <div class="quote">
+      Para mim a solução é unidade por unidade. Eu acho que a gente não consegue lidar com muitos problemas ao mesmo tempo.
+      <cite>— Paula Ferreira, reunião 10/04/2026</cite>
+    </div>
+  </section>
+
+  <section>
+    <h2><span class="sn">§</span>Visão geral do ciclo</h2>
+    <p>Cada bem patrimonial da UFG percorre, neste projeto, um ciclo de até 4 etapas operacionais. Nem todo bem passa por todas — depende da situação em que ele for encontrado em campo.</p>
+    <div class="fluxo">
+      <div class="fluxo-item"><strong>Etapa 1</strong><span>Coleta</span></div>
+      <div class="fluxo-item"><strong>Etapa 2</strong><span>Conciliação</span></div>
+      <div class="fluxo-item"><strong>Etapa 3</strong><span>Incorporação</span></div>
+      <div class="fluxo-item"><strong>Etapa 4</strong><span>Tombamento + re-coleta</span></div>
+    </div>
+  </section>
+
+  <section class="etapa e1">
+    <div class="etapa-num">Etapa 1 de 4</div>
+    <h2>Coleta em campo</h2>
+    <p>O levantamento físico bruto de todos os bens em uma determinada unidade. A equipe de campo visita cada sala, laboratório, depósito e área comum da unidade e registra todos os bens encontrados, com foto e localização.</p>
+
+    <div class="etapa-bloco">
+      <h4>Como funciona</h4>
+      <ul>
+        <li>A equipe de campo recebe a lista de bens cadastrados no SIADS para aquela unidade (tanto inventariados quanto não inventariados).</li>
+        <li>Visita sala por sala, com checklist, e para cada bem encontrado: (a) confere a plaqueta se houver, (b) tira foto, (c) registra no app.</li>
+        <li>Bens encontrados <strong>sem plaqueta</strong> ficam em um lote separado — são candidatos à conciliação (Etapa 2).</li>
+        <li>Bens encontrados com plaqueta ilegível, trocada ou com qualquer anomalia também vão pro lote de conciliação.</li>
+        <li>A coordenação administrativa da unidade é entrevistada especificamente sobre: bens de projetos (FUNAP/CNPq/CAPES), pacotes de plaquetas guardados em gavetas, bens removidos recentemente.</li>
+      </ul>
+    </div>
+
+    <div class="etapa-bloco">
+      <h4>Quem executa</h4>
+      <p>Equipe de campo (bolsistas <strong>perfil A</strong>). Perfil mais operacional, não precisa de conhecimento profundo do CIPAC. O que importa é atenção a detalhes, disciplina com o checklist e disposição física.</p>
+    </div>
+
+    <div class="etapa-bloco">
+      <h4>O que sai desta etapa</h4>
+      <ul>
+        <li>Planilha com todos os bens encontrados na unidade</li>
+        <li>Lote de bens sem plaqueta ou com plaqueta irregular</li>
+        <li>Lista de bens mencionados pela coordenação que podem estar registrados informalmente</li>
+        <li>Fotos catalogadas como evidência</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="etapa e2">
+    <div class="etapa-num">Etapa 2 de 4</div>
+    <h2>Conciliação</h2>
+    <p>Processo analítico que cruza os bens encontrados em campo sem plaqueta com a lista de bens marcados como <strong>não inventariados</strong> no sistema. O objetivo é, sempre que possível, <strong>aproveitar um registro existente</strong> em vez de criar um novo — isso mantém o histórico patrimonial e evita inflar o sistema com duplicatas.</p>
+
+    <div class="quote">
+      Pega o item que não tá inventariado lá, pega o número de registro dele e identifica o item semelhante ali na unidade. Se já tá registrado e não tá localizado, acho que é melhor a gente usar esse tombamento do que incorporar um novo.
+      <cite>— Paula Ferreira, reunião 10/04/2026</cite>
+    </div>
+
+    <div class="etapa-bloco">
+      <h4>Como funciona</h4>
+      <ul>
+        <li>Para cada bem encontrado sem plaqueta na unidade X, abre-se a lista dos não inventariados da mesma unidade X.</li>
+        <li>Faz-se matching por critérios: mesma categoria (ex: notebook Dell), compatibilidade de localização, data de entrada aproximada, marca e modelo quando disponíveis.</li>
+        <li>Se houver correspondência plausível, o bem encontrado em campo "adota" o número de tombamento do registro não inventariado. É o mesmo bem que estava perdido no sistema.</li>
+        <li>Se NÃO houver correspondência na mesma unidade, tenta-se nas unidades vizinhas ou relacionadas (ex: mesmo campus).</li>
+        <li>Bens que não conseguem ser conciliados ficam em um lote final → vão pra Etapa 3 (Incorporação).</li>
+      </ul>
+    </div>
+
+    <div class="etapa-bloco">
+      <h4>Quem executa</h4>
+      <p>Equipe de conciliação (bolsistas <strong>perfil B</strong>). Perfil mais técnico, com conhecimento de CIPAC/SIADS, Excel avançado e capacidade analítica. Essa equipe <strong>não vai a campo</strong> — trabalha sobre os dados trazidos pela equipe de coleta.</p>
+    </div>
+
+    <div class="etapa-bloco">
+      <h4>O que sai desta etapa</h4>
+      <ul>
+        <li>Lista de bens conciliados (bens encontrados + número de tombamento existente recuperado)</li>
+        <li>Lista de bens NÃO conciliados (precisam ser incorporados como novos)</li>
+        <li>Relatório de matching com os critérios usados em cada caso</li>
+        <li>Sinalização dos casos duvidosos que precisam de decisão manual</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="etapa e3">
+    <div class="etapa-num">Etapa 3 de 4</div>
+    <h2>Incorporação de bens novos</h2>
+    <p>Registro formal no CIPAC dos bens que foram localizados fisicamente durante a coleta mas que <strong>nunca tiveram entrada</strong> no sistema patrimonial. Tipicamente são bens adquiridos via projetos externos (FUNAP, CNPq, CAPES, emendas parlamentares) cujos termos de doação nunca foram processados pela DLOG dentro do prazo.</p>
+
+    <div class="quote">
+      Aí depois que fez essa peneira e passou só o que dava, a gente vai ter que registrar os itens de projeto que nunca deram entrada na universidade. A gente vai pra outra fase, que é incorporar mais bens na universidade para regularizar os bens.
+      <cite>— Paula Ferreira, reunião 10/04/2026</cite>
+    </div>
+
+    <div class="etapa-bloco">
+      <h4>Como funciona</h4>
+      <ul>
+        <li>Reúne-se a documentação disponível sobre o bem: nota fiscal, termo de doação, processo SEI, e-mails da coordenação do projeto.</li>
+        <li>Quando há documento comprobatório, a incorporação é direta — abre-se processo SEI e cadastra no CIPAC.</li>
+        <li>Quando NÃO há documentação, pode ser necessária avaliação (laudo técnico) para definir o valor e as características do bem.</li>
+        <li>O processo SEI de incorporação é aberto e tramitado pela CPAT.</li>
+        <li>Após incorporação, o bem recebe um número de tombamento novo, que será usado na Etapa 4.</li>
+      </ul>
+    </div>
+
+    <div class="etapa-bloco">
+      <h4>Quem executa</h4>
+      <p>Equipe de conciliação (perfil B) em articulação com a CPAT e a DLOG para os trâmites SEI. Volume esperado: significativo, especialmente em unidades com forte atuação em projetos externos (laboratórios de pesquisa na Agronomia, ICB).</p>
+    </div>
+
+    <div class="etapa-bloco">
+      <h4>O que sai desta etapa</h4>
+      <ul>
+        <li>Bens antes invisíveis agora registrados no CIPAC</li>
+        <li>Processos SEI de incorporação tramitados e concluídos</li>
+        <li>Histórico documental reconstruído do máximo de bens possível</li>
+        <li>Aumento formal do patrimônio registrado da UFG</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="etapa e4">
+    <div class="etapa-num">Etapa 4 de 4</div>
+    <h2>Tombamento e re-coleta</h2>
+    <p><strong>Fechamento do ciclo.</strong> Cada bem regularizado (seja via conciliação ou via incorporação) precisa receber uma plaqueta física nova com o número de tombamento correto, e ser re-coletado no aplicativo SIADS para que o sistema registre que aquele bem foi validado neste ciclo de inventário.</p>
+
+    <div class="etapa-bloco">
+      <h4>Como funciona</h4>
+      <ul>
+        <li>A equipe de campo retorna à unidade (<strong>segunda visita</strong>) com as plaquetas novas impressas.</li>
+        <li>Para cada bem da lista consolidada (conciliados + incorporados), a plaqueta é colada fisicamente.</li>
+        <li>Imediatamente após colar, o bem é re-coletado no app SIADS para registrar a validação.</li>
+        <li>Tira-se uma nova foto como evidência do tombamento.</li>
+        <li>Bens que não forem encontrados nesta segunda visita (bens que "sumiram" entre as visitas) são registrados como pendência crítica.</li>
+      </ul>
+    </div>
+
+    <div class="callout">
+      <strong>Por que a re-coleta é obrigatória</strong>
+      Sem a re-coleta no app, o item continuará aparecendo como "não validado no ciclo atual" na próxima rodada de inventário, mesmo tendo a plaqueta. Essa é exatamente uma das causas da discrepância histórica: bens foram tratados fisicamente, mas o registro digital não foi atualizado, e eles voltaram a aparecer como desaparecidos nos inventários seguintes.
+    </div>
+
+    <div class="quote">
+      Precisa fazer uma nova coleta. Identificou o item lá, precisa coletar ele no aplicativo, porque senão ele vai ficar sumido, desaparecido de novo.
+      <cite>— Paula Ferreira, reunião 10/04/2026</cite>
+    </div>
+
+    <div class="etapa-bloco">
+      <h4>Quem executa</h4>
+      <p>Equipe de campo (perfil A). Mesma equipe da Etapa 1, em uma segunda visita estruturada à unidade.</p>
+    </div>
+
+    <div class="etapa-bloco">
+      <h4>O que sai desta etapa</h4>
+      <ul>
+        <li>Bens fisicamente tombados com plaqueta nova</li>
+        <li>Registro digital atualizado no SIADS refletindo o estado real</li>
+        <li>Lista de pendências críticas (bens que sumiram entre a coleta e o tombamento)</li>
+        <li>Unidade X <strong>oficialmente concluída</strong> no projeto</li>
+      </ul>
+    </div>
+  </section>
+
+  <section>
+    <h2><span class="sn">§</span>Mapeamento para as fases do Trello</h2>
+    <p>A reestruturação do board em 10/04/2026 mapeia as 4 etapas operacionais desta metodologia em 4 fases específicas, mais 2 fases de enquadramento (planejamento e encerramento).</p>
+    <div class="tabela">
+      <table>
+        <thead>
+          <tr><th>Fase no Trello</th><th>Papel no projeto</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Fase 1 — Planejamento</td><td>Antecede o ciclo. Define escopo, unidades prioritárias, orçamento, cronograma.</td></tr>
+          <tr><td>Fase 2 — Contratação e Capacitação</td><td>Antecede o ciclo. Contrata bolsistas nos 2 perfis (campo e conciliação) e faz treinamento — incluindo a regra anti-validação falsa.</td></tr>
+          <tr><td>Fase 3 — Coleta em Campo</td><td><strong>Etapa 1</strong> da metodologia. Primeira visita às unidades.</td></tr>
+          <tr><td>Fase 4 — Conciliação</td><td><strong>Etapa 2</strong> da metodologia. Trabalho analítico sobre os dados coletados.</td></tr>
+          <tr><td>Fase 5 — Incorporação e Tombamento</td><td><strong>Etapas 3 e 4</strong> da metodologia combinadas. Registros SEI, plaquetas novas e re-coleta.</td></tr>
+          <tr><td>Fase 6 — Encerramento</td><td>Posterior ao ciclo. Relatório final, prestação de contas, arquivamento.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section>
+    <h2><span class="sn">§</span>Observações finais</h2>
+    <p>Esta metodologia será aplicada de forma <strong>cíclica</strong>: cada unidade da UFG percorre as 4 etapas sequencialmente antes que a equipe migre para a próxima unidade. O projeto todo, com <strong>18 meses</strong> de execução estimados, pretende levar todas as unidades prioritárias até o fechamento do ciclo, zerando a discrepância contábil de R$ 82,7 milhões identificada na abertura do projeto.</p>
+    <p>Este documento reflete as decisões tomadas na reunião de 10/04/2026. Revisões futuras serão feitas conforme a execução avance e novas informações surjam.</p>
+  </section>
+
+</main>
+
+<footer>
+  <div class="fo">UFG · Diretoria de Logística · DLOG · UG 153052</div>
+  <div class="fc2">Metodologia — projeto Patrimônio 2026–2027</div>
+</footer>
+
+</body>
+</html>
