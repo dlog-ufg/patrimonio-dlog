@@ -58,6 +58,7 @@
   @keyframes sp{to{transform:rotate(360deg)}}
   .erro{background:#FFF4F0;border:1px solid #FFD0C0;border-radius:8px;padding:1rem 1.25rem;font-size:.82rem;color:var(--alerta)}
   .ig{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;margin-bottom:1.25rem}
+  .ig.ig-3{grid-template-columns:repeat(3,1fr)}
   .ic{background:var(--branco);border:1px solid var(--borda);border-radius:10px;padding:1.2rem;position:relative;overflow:hidden}
   a.ic-link{text-decoration:none;color:inherit;display:block;transition:all .2s}
   a.ic-link:hover{transform:translateY(-2px);box-shadow:0 6px 18px rgba(0,63,127,.1);border-color:var(--verde)}
@@ -138,14 +139,40 @@
   .tl-date{font-family:'DM Mono',monospace;font-size:.6rem;color:var(--cinza-l);letter-spacing:.02em;text-align:center;line-height:1.3;word-wrap:break-word}
   .tl-item.done .tl-date{color:var(--verde)}
   .tl-item.now .tl-date{color:var(--amarelo);font-weight:600}
+  .missao{background:linear-gradient(135deg,#0A1628 0%,#1A2E4A 50%,#0A1628 100%);padding:5rem 2rem;position:relative;overflow:hidden;border-top:3px solid var(--ouro);border-bottom:3px solid var(--ouro)}
+  .missao::before{content:'';position:absolute;top:-100px;right:-100px;width:600px;height:600px;border-radius:50%;background:radial-gradient(circle,rgba(200,168,64,.08) 0%,transparent 60%);pointer-events:none}
+  .missao::after{content:'';position:absolute;bottom:-100px;left:-100px;width:500px;height:500px;border-radius:50%;background:radial-gradient(circle,rgba(212,90,42,.06) 0%,transparent 60%);pointer-events:none}
+  .missao-in{max-width:1100px;margin:0 auto;position:relative;z-index:2;text-align:center}
+  .missao-tag{display:inline-block;font-family:'DM Mono',monospace;font-size:.75rem;color:var(--ouro-l);letter-spacing:.35em;text-transform:uppercase;padding:.5rem 1.25rem;border:1px solid rgba(200,168,64,.4);border-radius:100px;margin-bottom:2rem;background:rgba(200,168,64,.06)}
+  .missao h2{font-family:'DM Serif Display',serif;font-size:3.2rem;line-height:1.08;color:var(--branco);margin-bottom:1.5rem;font-weight:400}
+  .missao h2 em{color:var(--ouro-l);font-style:italic;white-space:nowrap}
+  .missao-sub{max-width:680px;margin:0 auto 3rem;font-size:1rem;line-height:1.75;color:rgba(255,255,255,.65)}
+  .missao-counter{display:inline-flex;align-items:center;gap:2.5rem;padding:2rem 3rem;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.1);border-radius:14px;backdrop-filter:blur(10px);flex-wrap:wrap;justify-content:center}
+  .mc-block{display:flex;flex-direction:column;align-items:center;min-width:160px}
+  .mc-lbl{font-family:'DM Mono',monospace;font-size:.65rem;color:rgba(255,255,255,.45);letter-spacing:.2em;text-transform:uppercase;margin-bottom:.75rem}
+  .mc-val{font-family:'DM Serif Display',serif;font-size:2.8rem;line-height:1;font-weight:400}
+  .mc-val.r{color:#FF7050;text-decoration:line-through;text-decoration-color:rgba(255,112,80,.6);text-decoration-thickness:3px}
+  .mc-val.g{color:#60D0A0}
+  .mc-sub{font-size:.7rem;color:rgba(255,255,255,.4);margin-top:.5rem;font-family:'DM Mono',monospace;letter-spacing:.05em}
+  .mc-arrow{font-size:2.5rem;color:var(--ouro);font-weight:300;align-self:center;line-height:1}
+  @keyframes arrowMove{0%,100%{transform:translateX(0)}50%{transform:translateX(6px)}}
+  .mc-arrow{animation:arrowMove 2.5s ease-in-out infinite}
   .cbanner{background:#FFF8E8;border:1px solid #E8D060;border-radius:8px;padding:1rem 1.25rem;font-size:.82rem;color:var(--amarelo);margin-bottom:2rem;display:none}
   .cbanner.show{display:block}
   .cbanner strong{display:block;margin-bottom:.35rem}
   .cbanner code{background:rgba(0,0,0,.06);padding:.1rem .3rem;border-radius:3px;font-family:'DM Mono',monospace;font-size:.78rem}
   @media(max-width:900px){
     .hero-in{grid-template-columns:1fr}.hstats{display:none}
-    .ig{grid-template-columns:repeat(2,1fr)}.eq{grid-template-columns:repeat(2,1fr)}
+    .ig{grid-template-columns:repeat(2,1fr)}.ig.ig-3{grid-template-columns:repeat(2,1fr)}.eq{grid-template-columns:repeat(2,1fr)}
     .fase{grid-template-columns:80px 24px 1fr}
+    .missao{padding:3.5rem 1.5rem}
+    .missao h2{font-size:2rem}
+    .missao-sub{font-size:.88rem;margin-bottom:2.25rem}
+    .missao-counter{gap:1.25rem;padding:1.5rem 1.75rem}
+    .mc-block{min-width:120px}
+    .mc-val{font-size:2rem}
+    .mc-arrow{font-size:1.75rem;transform:rotate(90deg);margin:.25rem 0}
+    @keyframes arrowMove{0%,100%{transform:rotate(90deg) translateX(0)}50%{transform:rotate(90deg) translateX(6px)}}
     .tl-box{padding:1.25rem 1rem}
     .tl-track{overflow-x:auto;padding-bottom:.75rem}
     .tl-items{min-width:600px}
@@ -164,7 +191,8 @@
       <span class="lt">Inventário Patrimonial</span>
     </div>
     <nav>
-      <a href="#indicadores">Indicadores</a>
+      <a href="#missao">Missão</a>
+      <a href="#panorama">Panorama</a>
       <a href="#linhadotempo">Linha do Tempo</a>
       <a href="#fases">Fases</a>
       <a href="#equipe">Equipe</a>
@@ -200,24 +228,39 @@
   </div>
 </div>
 
+<section class="missao" id="missao">
+  <div class="missao-in">
+    <div class="missao-tag">Missão do projeto</div>
+    <h2>Zerar <em>R$ 82,7 milhões</em><br>em discrepância contábil</h2>
+    <p class="missao-sub">O patrimônio da Universidade Federal de Goiás apresenta R$ 82,7 milhões de divergência entre os registros do SIADS e os bens fisicamente localizados. Este projeto irá identificar, conciliar e regularizar cada item até zerar essa discrepância.</p>
+    <div class="missao-counter">
+      <div class="mc-block">
+        <span class="mc-lbl">Hoje</span>
+        <span class="mc-val r">R$ 82,7M</span>
+        <span class="mc-sub">Discrepância contábil</span>
+      </div>
+      <div class="mc-arrow">→</div>
+      <div class="mc-block">
+        <span class="mc-lbl">Meta</span>
+        <span class="mc-val g">R$ 0</span>
+        <span class="mc-sub">Patrimônio conciliado</span>
+      </div>
+    </div>
+  </div>
+</section>
+
 <main>
   <div class="cbanner" id="cb">
     <strong>Configuracao pendente</strong>
     Preencha <code>TRELLO_KEY</code> e <code>TRELLO_TOKEN</code> no script deste arquivo para ativar a sincronizacao ao vivo. Por ora o site exibe dados estaticos de demonstracao.
   </div>
 
-  <section id="indicadores">
+  <section id="panorama">
     <div class="sh">
       <span class="sn">01</span>
-      <h2>Painel de Indicadores</h2>
+      <h2>Panorama do projeto</h2>
     </div>
-    <div class="ig">
-      <div class="ic r">
-        <div class="il">O que vamos resolver</div>
-        <div class="iv r">R$ 82,7M</div>
-        <div class="is">Discrepância contábil de 82 milhões entre registros e bens localizados</div>
-        <div class="itag r">Critico</div>
-      </div>
+    <div class="ig ig-3">
       <div class="ic y">
         <div class="il">Fases do projeto</div>
         <div class="iv" id="iv-fases">—</div>
