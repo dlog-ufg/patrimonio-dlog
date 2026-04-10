@@ -229,19 +229,17 @@ Ideias para evolução quando fizer sentido:
 
 ---
 
-## 6. Credenciais usadas neste projeto (para referência do gerente atual)
+## 6. Gestão de credenciais
 
-> **Nunca comitar estas credenciais no repo.** Elas estão embutidas no `index.html` apenas porque o board é privado e o token é read-only.
+O painel atual usa chave e token do Trello embutidos diretamente no JavaScript do `index.html` — por ser um site estático 100% client-side, não há como esconder essas credenciais do browser. Essa é uma escolha consciente de arquitetura, aceitável porque o token deve ser **read-only** e o board é de uso interno.
 
-- **Trello Key**: gerada pelo próprio diretor em https://trello.com/app-key
-- **Trello Token**: read-only, gerado a partir da key acima
-- **GitHub org**: `dlog-ufg` (plano Free, criada em 10/04/2026)
-- **Board Trello ID**: `69d875d797d5c8a08a12e368`
+**Boas práticas de gestão:**
 
-Quando houver troca de gerente:
-1. Gerar nova key/token no Trello
-2. Atualizar as 3 linhas no `index.html`
-3. Revogar o token antigo em https://trello.com/u/[username]/account → Applications
+- Gerar token com escopo mínimo (apenas leitura) em https://trello.com/app-key
+- Rotacionar a cada troca de gestão
+- Nunca documentar a chave ou o token em nenhum outro arquivo do repositório
+- Ao sair, revogar o token próprio em https://trello.com/u/[seu-usuario]/account → Applications
+- Para cenários que exigem segurança real (token com permissões amplas, boards sensíveis), refatorar para um fluxo com backend ou com GitHub Actions + Secrets (ver seção "Integrações possíveis")
 
 ---
 
@@ -267,9 +265,6 @@ Modelo de chamado para abrir em https://suporte.cercomp.ufg.br:
 
 ## 8. Contato e suporte
 
-Dúvidas sobre este template ou sobre o projeto atual:
-
-- **Diretoria de Logística**: dlog@ufg.br
-- **Coordenadoria de Patrimônio**: cpat.dlog@ufg.br
+Dúvidas sobre este template ou sobre o projeto atual: contatar a Diretoria de Logística da UFG pelos canais institucionais oficiais.
 
 Este documento é vivo. Quando algo mudar no projeto ou no template, atualize aqui e commite.
