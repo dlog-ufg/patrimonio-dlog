@@ -58,6 +58,7 @@
   @keyframes sp{to{transform:rotate(360deg)}}
   .erro{background:#FFF4F0;border:1px solid #FFD0C0;border-radius:8px;padding:1rem 1.25rem;font-size:.82rem;color:var(--alerta)}
   .ig{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;margin-bottom:1.25rem}
+  .ig.ig-3{grid-template-columns:repeat(3,1fr)}
   .ic{background:var(--branco);border:1px solid var(--borda);border-radius:10px;padding:1.2rem;position:relative;overflow:hidden}
   .ic::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--azul)}
   .ic.r::before{background:var(--alerta)}.ic.g::before{background:var(--verde)}.ic.y::before{background:var(--ouro)}
@@ -208,11 +209,11 @@
       <span class="sn">01</span>
       <h2>Painel de Indicadores</h2>
     </div>
-    <div class="ig">
+    <div class="ig ig-3">
       <div class="ic r">
-        <div class="il">Discrepância contábil</div>
+        <div class="il">O que vamos resolver</div>
         <div class="iv r">R$ 82,7M</div>
-        <div class="is">Entre registros e bens localizados</div>
+        <div class="is">Discrepância contábil de 82 milhões entre registros e bens localizados</div>
         <div class="itag r">Critico</div>
       </div>
       <div class="ic y">
@@ -226,12 +227,6 @@
         <div class="iv" id="iv-cards">—</div>
         <div class="is">Cards ativos no board</div>
         <div class="itag y" id="it-cards">Carregando</div>
-      </div>
-      <div class="ic g">
-        <div class="il">Marco regulatório</div>
-        <div class="iv g">Decreto</div>
-        <div class="is">Decreto nº 12.785/2025 vigente</div>
-        <div class="itag g">Atualizado</div>
       </div>
     </div>
     <div class="pb">
