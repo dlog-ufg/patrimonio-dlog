@@ -227,14 +227,7 @@
       <span class="sn">03</span>
       <h2>Equipe Responsavel</h2>
     </div>
-    <div class="eq">
-      <div class="ec"><div class="eav">G</div><div class="en">Guilherme</div><div class="eca">Diretor de Logistica — DLOG/UFG</div><a class="ee" href="mailto:dlog@ufg.br">dlog@ufg.br</a></div>
-      <div class="ec"><div class="eav">P</div><div class="en">Paula Ferreira da Silva</div><div class="eca">Coordenadora de Patrimônio — CPAT</div><a class="ee" href="mailto:cpat.dlog@ufg.br">cpat.dlog@ufg.br</a></div>
-      <div class="ec"><div class="eav">T</div><div class="en">Tarcises Miranda Rocha</div><div class="eca">Presidente da CPAA</div><a class="ee" href="mailto:cpaa.dlog@ufg.br">cpaa.dlog@ufg.br</a></div>
-      <div class="ec"><div class="eav">G</div><div class="en">Gabriel</div><div class="eca">Tecnico — CPAT</div><a class="ee" href="mailto:cpat.dlog@ufg.br">cpat.dlog@ufg.br</a></div>
-      <div class="ec"><div class="eav">V</div><div class="en">Vinicius</div><div class="eca">Tecnico — CPAT</div><a class="ee" href="mailto:cpat.dlog@ufg.br">cpat.dlog@ufg.br</a></div>
-      <div class="ec"><div class="eav">D</div><div class="en">Diego</div><div class="eca">Tecnico — CPAT</div><a class="ee" href="mailto:cpat.dlog@ufg.br">cpat.dlog@ufg.br</a></div>
-    </div>
+    <div class="eq" id="equipe-cont"><div class="loading"><div class="spin"></div>Carregando equipe...</div></div>
   </section>
 </main>
 
@@ -280,6 +273,41 @@ function statusFase(nome) {
   if (n.includes('[CONCLUIDO]') || n.includes('[CONCLUÍDO]')) return 'c';
   if (n.includes('[ATIVO]')) return 'a';
   return 'p';
+}
+
+function isEquipeList(nome) {
+  return nome.toUpperCase().includes('[EQUIPE]');
+}
+
+function parseEquipeCard(card) {
+  const linhas = (card.desc || '').split('\n').map(l => l.trim()).filter(Boolean);
+  const emailRe = /[\w.+-]+@[\w-]+\.[\w.-]+/;
+  let email = '', cargo = '';
+  for (const l of linhas) {
+    const m = l.match(emailRe);
+    if (m && !email) email = m[0];
+    else if (!cargo) cargo = l;
+  }
+  if (!cargo && linhas.length) cargo = linhas[0];
+  return { nome: card.name, cargo, email };
+}
+
+function renderEquipe(cards) {
+  const c = document.getElementById('equipe-cont');
+  if (!cards || !cards.length) {
+    c.innerHTML = '<div class="loading">Nenhum membro cadastrado na lista [EQUIPE] do Trello.</div>';
+    return;
+  }
+  c.innerHTML = cards.map(card => {
+    const p = parseEquipeCard(card);
+    const inicial = (p.nome || '?').charAt(0).toUpperCase();
+    return `<div class="ec">
+      <div class="eav">${inicial}</div>
+      <div class="en">${p.nome}</div>
+      <div class="eca">${p.cargo || ''}</div>
+      ${p.email ? `<a class="ee" href="mailto:${p.email}">${p.email}</a>` : ''}
+    </div>`;
+  }).join('');
 }
 
 function renderProg(lists, map) {
@@ -361,7 +389,9 @@ async function loadTrello() {
   const r1 = await fetch(`https://api.trello.com/1/boards/${BOARD_ID}/lists?${a}&_=${Date.now()}`);
   if (!r1.ok) throw new Error('Erro ' + r1.status + ' ao buscar listas');
   const raw = await r1.json();
-  const lists = raw.map(l => ({id:l.id, name:l.name, s:statusFase(l.name)}));
+  const allLists = raw.map(l => ({id:l.id, name:l.name, s:statusFase(l.name), equipe:isEquipeList(l.name)}));
+  const lists = allLists.filter(l => !l.equipe);
+  const equipeLists = allLists.filter(l => l.equipe);
   const map = {};
   let total = 0;
   for (const l of lists) {
@@ -370,7 +400,13 @@ async function loadTrello() {
     map[l.id] = cs.map(c => ({name:c.name, desc:c.desc, url:c.shortUrl}));
     total += cs.length;
   }
-  return {lists, map, total};
+  let equipe = [];
+  for (const l of equipeLists) {
+    const r3 = await fetch(`https://api.trello.com/1/lists/${l.id}/cards?${a}&_=${Date.now()}`);
+    const cs = await r3.json();
+    equipe = equipe.concat(cs);
+  }
+  return {lists, map, total, equipe};
 }
 
 async function init() {
@@ -380,16 +416,19 @@ async function init() {
     renderProg(FB_LISTS, FB_CARDS);
     renderFases(FB_LISTS, FB_CARDS);
     upd(FB_LISTS, total);
+    renderEquipe([]);
     return;
   }
   try {
-    const {lists,map,total} = await loadTrello();
+    const {lists,map,total,equipe} = await loadTrello();
     renderProg(lists, map);
     renderFases(lists, map);
     upd(lists, total);
+    renderEquipe(equipe);
   } catch(e) {
     document.getElementById('fases-cont').innerHTML = `<div class="erro">Erro ao conectar ao Trello: ${e.message}</div>`;
     document.getElementById('prog-cont').innerHTML = `<div class="erro">Dados indisponíveis.</div>`;
+    document.getElementById('equipe-cont').innerHTML = `<div class="erro">Equipe indisponível.</div>`;
   }
 }
 
